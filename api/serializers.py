@@ -1,10 +1,17 @@
 from rest_framework import serializers
  
-from .models import Tag
+from .models import Tag, Dish
+ 
  
 class TagSerializer(serializers.ModelSerializer):
  
-    # create a meta class
     class Meta:
         model = Tag
-        fields = ('id', 'title',)
+        fields = ('id', 'title')
+        
+
+class DishSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Dish
+        fields = ('id', 'recommended', 'title', 'description', 'tag', 'picture', 'views')

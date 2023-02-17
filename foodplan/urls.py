@@ -4,15 +4,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from api.views import TagView
+from api.views import TagView, DishView
 
 router = DefaultRouter()
 
 router.register(r'tags', TagView, 'tag')
+router.register(r'dishes', DishView, 'dish')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('frontend.urls')),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
 +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

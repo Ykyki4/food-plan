@@ -1,9 +1,19 @@
 import React, { Component } from "react";
+import Banner from "./Banner"
+import Popular from "./Main/Popular";
+import Recommendations from "./Main/Recommendations";
+import Tags from "./Main/Tags"
 
 function MainPage() {
     return (
-        <div className="h-screen w-full flex justify-center items-center">
-            <h1 className="text-3xl font-bold underline">This is Main Page</h1>
+        <div className="mx-24">
+            <Banner text="Блюда на ваш вкус!" />
+
+            <div className="grid grid-cols-1 gap-12 justify-around mt-12 py-12 h-full bg-blue-100 rounded-[5rem]">
+                <Recommendations />
+                <Popular />
+                <Tags />
+            </div>
         </div>
     );
 }

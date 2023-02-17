@@ -15,9 +15,8 @@ class Layout extends Component{
     }
 
     menuitems = [
-        {name: "Главная", href: ""},
-        {name: "Лучшие блюда", href: ""},
-        {name: "Рекомендации", href: ""},
+        {name: "Главная", href: "/"},
+        {name: "Все блюда", href: "/dishes/"},
     ]
 
     getTags = () => {
@@ -25,11 +24,10 @@ class Layout extends Component{
           .get("/api/tags/")
           .then((res) => this.setState({ tagList: res.data }))
           .catch((err) => console.log(err));
-      };
+    };
 
     componentDidMount() {
         this.getTags();
-        console.log(this.state.tagList)
     }
 
     toggleDropdown() {
@@ -41,7 +39,7 @@ class Layout extends Component{
     render() {
         return (
             <>
-                <nav className="bg-sky-500/30">
+                <nav className="bg-sky-500/30 shadow-2xl z-10">
                     <div class="flex h-16 items-center justify-between">
                         <div className="flex items-center space-x-4 w-[50%] h-full px-2">
                             <div className="flex items-center">
@@ -50,13 +48,13 @@ class Layout extends Component{
                             {this.menuitems?.map((menuitem)=>(
                                 <Link
                                     to={menuitem?.href}
-                                    className="text-inherit bg-blue-100 hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                    className="text-inherit hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     {menuitem?.name}
                                 </Link>
                             ))}
 
                             <div className="">
-                                <button onClick={() => this.toggleDropdown()} className="flex items-center text-inherit bg-blue-100 hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                                <button onClick={() => this.toggleDropdown()} className="flex items-center text-inherit hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     <p className="pr-2">
                                         Блюда
                                     </p>
@@ -66,7 +64,7 @@ class Layout extends Component{
                                     }
                                 </button>
                                 {this.state.tagsOppened ?
-                                    <div className="absolute bg-blue-100 w-36 mt-2 rounded-md">
+                                    <div className="absolute bg-blue-200 w-36 mt-2 rounded-md">
                                         <div className="flex flex-col">
                                             {this.state.tagList?.map((tag)=>(
                                                 <Link className="p-2 rounded-md hover:flex-1 hover:bg-blue-300 hover:text-white">
