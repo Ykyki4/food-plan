@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Banner from "./Banner"
+import Banner from "./Layouts/Banner"
 import Popular from "./Main/Popular";
 import Recommendations from "./Main/Recommendations";
 import Tags from "./Main/Tags"

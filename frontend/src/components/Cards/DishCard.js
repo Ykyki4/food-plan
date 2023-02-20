@@ -8,8 +8,8 @@ const DishCard = ({dish}) => {
         <div style={{
             backgroundImage: `url(${dish.picture})`,
             backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',}} className='group w-56 h-44 mr-4 hover:shadow-2xl shadow-indigo-500/40 text-white text-sm font-bold'>
-            <div className="h-full flex items-end justify-between duration-150 group-hover:bg-black/50">
+            backgroundSize: 'cover',}} className='group w-56 h-44 mr-4 rounded-xl border border-zinc-400/30 text-white text-sm font-bold'>
+            <div className="h-full flex items-end justify-between rounded-xl duration-150 group-hover:bg-black/50">
                 <Link 
                 className="group/link duration-150 opacity-0 group-hover:opacity-100 mx-1">
                     {dish.title}
