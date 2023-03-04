@@ -15,7 +15,6 @@ class DishAdmin(admin.ModelAdmin):
     list_display = ('title', 'views', 'recommended', 'tag')
     list_editable = ('recommended', 'tag')
     list_filter = ('recommended', 'tag')
-    ordering = ('-views',)
     inlines = [
         DishStepInline,
         DishProductsInline,

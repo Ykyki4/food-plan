@@ -1,19 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractBaseUser):
-    telegram_id = models.CharField(max_length=100, unique=True)
-    name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=20)
-    is_manager = models.BooleanField(default=False)
-    is_premium = models.BooleanField(default=False)
+    name = models.CharField('Имя', max_length=50)
+    phone = PhoneNumberField('Номер телефона')
+    is_premium = models.BooleanField('Премиум', default=False)
+    
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
-    USERNAME_FIELD = 'telegram_id'
+    def __str__(self):
+        return self.phone
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField('Название', max_length=200)
     
     class Meta:
         verbose_name = 'Тэг'
@@ -24,9 +28,9 @@ class Tag(models.Model):
 
 
 class Dish(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    picture = models.ImageField(upload_to="dish-pictures", blank=True, null=True)
+    title = models.CharField('Название', max_length=200)
+    description = models.TextField('Описание', blank=True, null=True)
+    picture = models.ImageField('Картинка', upload_to="dish-pictures", blank=True, null=True)
     recommended = models.BooleanField('В рекомендациях', default=False)
     views = models.PositiveIntegerField('Просмотры', default=0)
     tag = models.ForeignKey(
@@ -41,16 +45,17 @@ class Dish(models.Model):
     class Meta:
         verbose_name = 'Блюдо'
         verbose_name_plural = 'Блюда'
+        ordering = ['-views']
 
     def __str__(self):
         return self.title
 
 
 class DishStep(models.Model):
-    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    order = models.IntegerField()
-    picture = models.ImageField(upload_to="dishstep-pictures", blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    dish = models.ForeignKey(Dish, verbose_name='Блюдо', related_name='steps', on_delete=models.CASCADE)
+    order = models.IntegerField('Порядок')
+    picture = models.ImageField('Картинка', upload_to="dishstep-pictures", blank=True, null=True)
+    description = models.TextField('Описание', blank=True, null=True)
     
     class Meta:
         verbose_name = 'Шаг приготовление блюда'
@@ -58,7 +63,7 @@ class DishStep(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField('Название', max_length=200)
     
     class Meta:
         verbose_name = 'Продукт'
@@ -69,9 +74,9 @@ class Product(models.Model):
 
 
 class DishProduct(models.Model):
-    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    amount = models.CharField(max_length=200)
+    dish = models.ForeignKey(Dish, verbose_name='Блюдо', related_name='dish_products', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, verbose_name='Продукт', related_name='dish_products', on_delete=models.CASCADE)
+    amount = models.CharField('Количество', max_length=200)
     
     class Meta:
         verbose_name = 'Продукт блюда'
@@ -79,8 +84,6 @@ class DishProduct(models.Model):
 
 
 class UserDish(models.Model):
-    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    liked = models.BooleanField(default=False)
-    disliked = models.BooleanField(default=False)
-    shown_date_time = models.DateTimeField(auto_now_add=True)
+    dish = models.ForeignKey(Dish, verbose_name='Блюдо', related_name='user_dishes', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name='Пользователь', related_name='user_dishes', on_delete=models.CASCADE)
+    liked = models.BooleanField('Лайк', default=False)
