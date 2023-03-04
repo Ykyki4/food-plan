@@ -4,6 +4,7 @@ import MainPage from "./MainPage";
 import AllDishes from "./AllDishes";
 import Header from "./Layouts/Header";
 import DishDeatil from "./DishDetail";
+import TagDishes from "./TagDishes";
 
 class App extends Component {
     constructor(props) {
@@ -17,6 +18,7 @@ class App extends Component {
                     <Route path="/" element={<Header />}>
                         <Route index element={<MainPage />} />
                         <Route path="/dish/:id" element={<DishDeatil />} />
+                        <Route path="/tag/:id" element={<TagDishes />} />
                         <Route path="/dishes" element={<AllDishes />} />
                     </Route>
                 </Routes>

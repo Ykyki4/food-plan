@@ -67,7 +67,9 @@ class Header extends Component{
                                     <div className="absolute bg-blue-200 w-36 mt-2 rounded-md">
                                         <div className="flex flex-col">
                                             {this.state.tagList?.map((tag)=>(
-                                                <Link className="p-2 rounded-md hover:flex-1 hover:bg-blue-300 hover:text-white">
+                                                <Link 
+                                                className="p-2 rounded-md hover:flex-1 hover:bg-blue-300 hover:text-white"
+                                                to={"/tag/"+tag.id}>
                                                     <p className="text-sm text-inherit font-medium">
                                                         {tag?.title}
                                                     </p>
