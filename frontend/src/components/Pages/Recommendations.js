@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import DishesBlock from "../Layouts/DishesBlock";
 import axios from "axios";
+import DishesGrid from "../Layouts/DishesGrid";
 
-class RecommendationsBlock extends Component {
+class Recommendations extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,7 +13,7 @@ class RecommendationsBlock extends Component {
     getDishes = () => {
         axios
           .get("/api/dishes/")
-          .then((res) => this.setState({ dishesList: res.data.filter((dish)=> dish.recommended === true).slice(0, 3) }))
+          .then((res) => this.setState({ dishesList: res.data.filter((dish)=> dish.recommended === true) }))
           .catch((err) => console.log(err));
     };
 
@@ -23,9 +23,9 @@ class RecommendationsBlock extends Component {
 
     render() {
         return (
-            <DishesBlock title="Рекомендации" href="/recommended" dishesList={this.state.dishesList} /> 
+            <DishesGrid dishesList={this.state.dishesList} itemsPerPage={12} bannerText="Рекомендованные блюда" />
         )
     }
 }
 
-export default RecommendationsBlock
+export default Recommendations

@@ -22,7 +22,6 @@ class AllDishes extends Component {
     }
 
     render() {
-        console.log(this.state.dishesList)
         return (
             <DishesGrid dishesList={this.state.dishesList} itemsPerPage={12} bannerText="Все блюда" />
         )
