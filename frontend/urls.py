@@ -5,5 +5,6 @@ from frontend.views import index
 urlpatterns = [
     path('', index, name='index'),
     path('dishes/', index, name='dishes'),
-    path('dish/<int:id>', index, name='dish')
+    path('dish/<int:id>', index, name='dish'),
+    path('tag/<int:id>', index, name='tag')
 ]

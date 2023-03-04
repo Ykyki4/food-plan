@@ -11,7 +11,8 @@ const DishCard = ({dish}) => {
             backgroundSize: 'cover',}} className='group w-56 h-44 mr-4 rounded-xl border border-zinc-400/30 text-white text-sm font-bold'>
             <div className="h-full flex items-end justify-between rounded-xl duration-150 group-hover:bg-black/50">
                 <Link 
-                className="group/link duration-150 opacity-0 group-hover:opacity-100 mx-1">
+                className="group/link duration-150 opacity-0 group-hover:opacity-100 mx-1"
+                to={"/dish/"+dish.id}>
                     {dish.title}
                     <ImArrowRight2 className="inline duration-150 group-hover/link:ml-4" size={"20"} />
                 </Link>
