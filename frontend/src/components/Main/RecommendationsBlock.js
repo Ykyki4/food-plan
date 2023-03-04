@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import DishesBlock from "../Layouts/DishesBlock";
-import DishCard from "../Cards/DishCard";
 import axios from "axios";
 
-class Popular extends Component {
+class RecommendationsBlock extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -14,7 +13,7 @@ class Popular extends Component {
     getDishes = () => {
         axios
           .get("/api/dishes/")
-          .then((res) => this.setState({ dishesList: res.data.slice(0, 3) }))
+          .then((res) => this.setState({ dishesList: res.data.filter((dish)=> dish.recommended === true).slice(0, 3) }))
           .catch((err) => console.log(err));
     };
 
@@ -23,10 +22,10 @@ class Popular extends Component {
     }
 
     render() {
-        return(
-            <DishesBlock title="Популярные блюда" to="/popular" dishesList={this.state.dishesList} />
+        return (
+            <DishesBlock title="Рекомендации" href="/recommendations" dishesList={this.state.dishesList} /> 
         )
     }
 }
 
-export default Popular
+export default RecommendationsBlock
