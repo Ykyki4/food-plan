@@ -29,18 +29,18 @@ class DishDeatil extends Component {
 
                 <div className="mt-24">
                     <div className="py-12 relative h-full bg-blue-100 rounded-[5rem]">
-                        <div className="flex justify-center">
-                            <img src={this.state.dish.picture} alt="dish picture" className="w-[250px] h-[200px] absolute -top-20 mt-4 rounded-xl" />
-                        </div>
-                        <div className="flex justify-between">
+                        <div className="flex justify-around">
                             <div className="ml-8 w-1/3">
                                 <p className="text-2xl font-bold">{this.state.dish.title}</p>
                                 {this.state.dish.description ?
                                     <div>
                                         <hr className="w-1/2 h-[0.2rem] bg-black/50 rounded-md" />
-                                        <p className="text-md font-semibold leading-tight mb-1">{this.state.dish.description}</p>
+                                        <p className="text-md font-semibold leading-tight">{this.state.dish.description}</p>
                                     </div> : null
                                 }
+                            </div>
+                            <div className="">
+                                <img src={this.state.dish.picture} alt="dish picture" className="w-[250px] h-[200px] rounded-xl" />
                             </div>
                             <div className="w-1/3 flex flex-col justify-center">
                                 <p className="text-md font-semibold">Ингридиенты:</p>
