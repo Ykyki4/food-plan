@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import DishesGrid from "./Layouts/DishesGrid";
+import DishesGrid from "../Layouts/DishesGrid";
 
 class AllDishes extends Component {
     constructor(props) {

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainPage from "./MainPage";
-import AllDishes from "./AllDishes";
+import MainPage from "./pages/MainPage";
+import AllDishes from "./pages/AllDishes";
 import Header from "./Layouts/Header";
-import DishDeatil from "./DishDetail";
-import TagDishes from "./TagDishes";
+import DishDeatil from "./pages/DishDetail";
+import TagDishes from "./pages/TagDishes";
 
 class App extends Component {
     constructor(props) {

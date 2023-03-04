@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Banner from "./Layouts/Banner";
-import WithRouter from "./WithRouter";
+import Banner from "../Layouts/Banner";
+import WithRouter from "../WithRouter";
 import axios from "axios"
 
 class DishDeatil extends Component {

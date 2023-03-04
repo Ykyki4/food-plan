@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Banner from "./Layouts/Banner"
-import PopularBlock from "./Main/PopularBlock";
-import RecommendationsBlock from "./Main/RecommendationsBlock";
-import TagsBlocks from "./Main/TagsBlocks"
+import Banner from "../Layouts/Banner"
+import PopularBlock from "../Main/PopularBlock";
+import RecommendationsBlock from "../Main/RecommendationsBlock";
+import TagsBlocks from "../Main/TagsBlocks"
 
 function MainPage() {
     return (

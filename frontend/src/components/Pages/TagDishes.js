@@ -1,7 +1,6 @@
 import React, { Component, useState } from "react";
-import DishesGrid from "./Layouts/DishesGrid";
-import { useParams } from "react-router-dom";
-import WithRouter from "./WithRouter";
+import DishesGrid from "../Layouts/DishesGrid";
+import WithRouter from "../WithRouter";
 import axios from "axios"
 
 class TagDishes extends Component {
