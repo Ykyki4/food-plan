@@ -33,7 +33,7 @@ class DishDeatil extends Component {
                             <img src={this.state.dish.picture} alt="dish picture" className="w-[250px] h-[200px] absolute -top-20 mt-4 rounded-xl" />
                         </div>
                         <div className="flex justify-between">
-                            <div className="w-1/3 mx-8">
+                            <div className="ml-8 w-1/3">
                                 <p className="text-2xl font-bold">{this.state.dish.title}</p>
                                 {this.state.dish.description ?
                                     <div>
@@ -42,7 +42,7 @@ class DishDeatil extends Component {
                                     </div> : null
                                 }
                             </div>
-                            <div>
+                            <div className="w-1/3 flex flex-col justify-center">
                                 <p className="text-md font-semibold">Ингридиенты:</p>
                                 <ul className="list-disc list-inside">
                                     {this.state.dish.dish_products?.map((dish_product) => (
