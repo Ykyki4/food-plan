@@ -14,7 +14,6 @@ class DishesGrid extends Component {
     }
 
     handlePageChange = (event) => {
-        console.log((event.selected * this.props.itemsPerPage) % this.props.dishesList.length)
         this.setState({itemsOffset: (event.selected * this.props.itemsPerPage) % this.props.dishesList.length});
         this.setState({page: event.selected})
     };
