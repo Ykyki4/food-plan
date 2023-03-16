@@ -16,7 +16,7 @@ const DishCard = ({dish}) => {
                     {dish.title}
                     <ImArrowRight2 className="inline duration-150 group-hover/link:ml-4" size={"20"} />
                 </Link>
-                <div className="flex relative bottom-0 right-0 opacity-0 group-hover:opacity-100 items-center">
+                <div className="flex opacity-0 group-hover:opacity-100 items-center">
                     <p>{dish.views}</p>
                     <AiFillEye />
                 </div>
