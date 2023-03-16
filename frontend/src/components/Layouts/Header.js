@@ -1,29 +1,35 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { BiDish } from "react-icons/bi";
 import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io"
 import axios from "axios"
+import Register from "../Modals/Register";
+import Login from "../Modals/Login";
 
 
-class Header extends Component{
+class Header extends Component {
     constructor(props) {
         super(props)
         this.state = {
             tagList: [],
             tagsOppened: false,
+            registerOppened: false,
+            loginOppened: false,
+            accountOppened: false,
         }
+        this.toggleRegister = this.toggleRegister.bind(this);
+        this.toggleLogin = this.toggleLogin.bind(this);
+        this.menuitems = [
+            { name: "Главная", href: "/" },
+            { name: "Все блюда", href: "/dishes/" },
+        ];
     }
-
-    menuitems = [
-        {name: "Главная", href: "/"},
-        {name: "Все блюда", href: "/dishes/"},
-    ]
 
     getTags = () => {
         axios
-          .get("/api/tags/")
-          .then((res) => this.setState({ tagList: res.data }))
-          .catch((err) => console.log(err));
+            .get("/api/tags/")
+            .then((res) => this.setState({ tagList: res.data }))
+            .catch((err) => console.log(err));
     };
 
     componentDidMount() {
@@ -36,17 +42,49 @@ class Header extends Component{
         }));
     }
 
+    toggleRegister() {
+        this.setState(prevState => ({
+            registerOppened: !prevState.registerOppened
+        }));
+    }
+
+    toggleLogin() {
+        this.setState(prevState => ({
+            loginOppened: !prevState.loginOppened
+        }));
+    }
+
+    toggleAccount() {
+        this.setState(prevState => ({
+            accountOppened: !prevState.accountOppened
+        }));
+    }
+
+    logout() {
+        localStorage.removeItem('user_id')
+        localStorage.removeItem("user_name")
+        localStorage.removeItem("user_phone")
+        window.location.replace("/")
+    }
+
     render() {
         return (
             <>
-                <nav className="bg-sky-500/30 shadow-2xl z-10">
-                    <div class="flex h-16 items-center justify-between">
+                <Login loginOppened={this.state.loginOppened}
+                    handleToggleRegister={this.toggleRegister}
+                    handleToggleLogin={this.toggleLogin} />
+                <Register registerOppened={this.state.registerOppened}
+                    handleToggleRegister={this.toggleRegister}
+                    handleToggleLogin={this.toggleLogin} />
+                <div className="bg-sky-500/30 shadow-2xl z-10">
+                    <div className="flex h-16 items-center justify-between">
                         <div className="flex items-center space-x-4 w-[50%] h-full px-2">
                             <div className="flex items-center">
                                 <BiDish size={"40"} />
                             </div>
-                            {this.menuitems?.map((menuitem)=>(
+                            {this.menuitems?.map((menuitem, index) => (
                                 <Link
+                                    key={index}
                                     to={menuitem?.href}
                                     className="text-inherit hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     {menuitem?.name}
@@ -59,17 +97,18 @@ class Header extends Component{
                                         Блюда
                                     </p>
                                     {this.state.tagsOppened ?
-                                    <IoMdArrowDropupCircle size={"24"} /> :
-                                    <IoMdArrowDropdownCircle size={"24"} />
+                                        <IoMdArrowDropupCircle size={"24"} /> :
+                                        <IoMdArrowDropdownCircle size={"24"} />
                                     }
                                 </button>
                                 {this.state.tagsOppened ?
                                     <div className="absolute bg-blue-200 w-36 mt-2 rounded-md">
                                         <div className="flex flex-col">
-                                            {this.state.tagList?.map((tag)=>(
-                                                <Link 
-                                                className="p-2 rounded-md hover:flex-1 hover:bg-blue-300 hover:text-white"
-                                                to={"/tag/"+tag.id}>
+                                            {this.state.tagList?.map((tag, index) => (
+                                                <Link
+                                                    key={index}
+                                                    className="p-2 rounded-md hover:flex-1 hover:bg-blue-300 hover:text-white"
+                                                    to={"/tag/" + tag.id}>
                                                     <p className="text-sm text-inherit font-medium">
                                                         {tag?.title}
                                                     </p>
@@ -77,20 +116,51 @@ class Header extends Component{
                                             ))}
                                         </div>
                                     </div> : null
-                                }   
+                                }
                             </div>
                         </div>
-                        <div className="absolute flex items-center space-x-4 right-0 w-[30%] h-full px-2">
-                            <div className="group absolute right-4">
-                                <button 
-                                type="button" 
-                                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Войти
+                        <div className="flex items-center justify-end space-x-4 w-[30%] h-full mx-2">
+                            {localStorage.getItem('user_name') ?
+                                <div className="mx-4">
+                                    <button onClick={() => this.toggleAccount()} className="flex items-center text-inherit hover:bg-blue-300 hover:text-white px-3 py-2 rounded-md">
+                                        <p className="font-semibold text-lg mx-1">
+                                            {localStorage.getItem('user_name')}
+                                        </p>
+                                        {this.state.accountOppened ?
+                                            <IoMdArrowDropupCircle size={"24"} /> :
+                                            <IoMdArrowDropdownCircle size={"24"} />
+                                        }
+                                    </button>
+                                    {this.state.accountOppened ?
+                                        <div className="absolute bg-blue-200 w-24 mt-2 rounded-md">
+                                            <div className="flex flex-col">
+                                                <Link
+                                                    className="p-2 rounded-md text-center hover:flex-1 hover:bg-blue-300 hover:text-white"
+                                                    to={"/user-dishes/"}>
+                                                    <p className="text-sm text-inherit font-medium">
+                                                        Мои блюда
+                                                    </p>
+                                                </Link>
+                                                <button
+                                                    onClick={() => this.logout()}
+                                                    className="p-2 rounded-md hover:flex-1 hover:bg-blue-300 hover:text-white"
+                                                    >
+                                                    <p className="text-sm text-inherit font-medium">
+                                                        Выйти
+                                                    </p>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    : null}
+                                </div>
+                                :
+                                <button onClick={() => this.toggleRegister()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                    Зарегистрироваться
                                 </button>
-                            </div>
+                            }
                         </div>
                     </div>
-                </nav>
+                </div>
                 <Outlet />
             </>
         );
