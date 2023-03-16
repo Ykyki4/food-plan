@@ -6,6 +6,7 @@ import Header from "./Layouts/Header";
 import DishDeatil from "./pages/DishDetail";
 import TagDishes from "./pages/TagDishes";
 import Recommendations from "./Pages/Recommendations";
+import UserDishes from "./Pages/UserDishes"
 
 class App extends Component {
     constructor(props) {
@@ -22,6 +23,7 @@ class App extends Component {
                         <Route path="/tag/:id" element={<TagDishes />} />
                         <Route path="/dishes" element={<AllDishes />} />
                         <Route path="/recommended" element={<Recommendations />} />
+                        <Route path="/user-dishes" element={<UserDishes />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
