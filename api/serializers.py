@@ -1,6 +1,7 @@
 from rest_framework import serializers
+from django.http import HttpResponseRedirect
  
-from .models import Tag, Dish, DishProduct, DishStep
+from .models import Tag, Dish, DishProduct, DishStep, User, UserLikedDish
 
 
 class DishProductSerializer(serializers.ModelSerializer):
@@ -44,10 +45,35 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ('id', 'title', 'dishes')
         
-
-class TagDetailSerializer(serializers.ModelSerializer):
-    dishes = DishDetailSerializer(many=True)
- 
+        
+class UserLikedDishSerializer(serializers.ModelSerializer):
+    dish = DishSerializer(many=False, allow_null=True)
+    
     class Meta:
-        model = Tag
-        fields = ('id', 'title', 'dishes')
+        model = UserLikedDish
+        fields = ("id", "dish")
+        
+        
+class UserSerializer(serializers.ModelSerializer):
+    user_liked_dishes = UserLikedDishSerializer(many=True)
+        
+    class Meta:
+        model = User
+        fields = ("id", "name", "phone", "user_liked_dishes",)
+    
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+
+        user = User.objects.create_user(
+            phone=validated_data['phone'],
+            name=validated_data['name'],
+            password=validated_data['password'],
+        )
+
+        return user
+
+    class Meta:
+        model = User
+        fields = ("id", "name", "phone", "password",)
