@@ -1,19 +1,37 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+class UserManager(BaseUserManager):
+    def _create_user(self, phone, name, password, **extra_fields):
+        user = self.model(
+            phone=phone,      
+            name=name,      
+            password=password,
+        )
+        user.save(using=self._db)
+        return user
+    
+    def create_user(self, phone, name, password, **extra_fields):
+        return self._create_user(phone, name, password, **extra_fields)
+    
+
 class User(AbstractBaseUser):
     name = models.CharField('Имя', max_length=50)
-    phone = PhoneNumberField('Номер телефона')
+    phone = PhoneNumberField('Номер телефона', unique=True)
     is_premium = models.BooleanField('Премиум', default=False)
+    
+    objects = UserManager()
+    
+    USERNAME_FIELD = 'phone'
     
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return self.phone
+        return str(self.phone)
 
 
 class Tag(models.Model):
@@ -81,9 +99,19 @@ class DishProduct(models.Model):
     class Meta:
         verbose_name = 'Продукт блюда'
         verbose_name_plural = 'Продукты блюда'
+    
+    def __str__(self):
+        return f"{self.dish} - {self.product}"
 
 
-class UserDish(models.Model):
-    dish = models.ForeignKey(Dish, verbose_name='Блюдо', related_name='user_dishes', on_delete=models.CASCADE)
-    user = models.ForeignKey(User, verbose_name='Пользователь', related_name='user_dishes', on_delete=models.CASCADE)
-    liked = models.BooleanField('Лайк', default=False)
+class UserLikedDish(models.Model):
+    dish = models.ForeignKey(Dish, verbose_name='Блюдо', related_name='user_liked_dishes', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name='Пользователь', related_name='user_liked_dishes', on_delete=models.CASCADE)
+    
+    class Meta:
+        verbose_name = 'Понравившиеся пользователю блюдо'
+        verbose_name_plural = 'Понравившиеся пользователю блюда'
+        unique_together = ('dish', 'user',)
+        
+    def __str__(self):
+        return f"{self.dish} - {self.user}"
