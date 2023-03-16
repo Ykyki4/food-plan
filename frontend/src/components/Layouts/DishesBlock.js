@@ -18,8 +18,8 @@ const DishesBlock = ({title, dishesList, href=null}) => {
                     <hr className="h-[0.2rem] border-none w-[60%] bg-gray-300 duration-150 group-hover:w-[70%]" />
                 </div>
                 <div className="flex mt-4">
-                    {dishesList?.map((dish)=>(
-                        <DishCard dish={dish} />
+                    {dishesList?.map((dish, index)=>(
+                        <DishCard key={index} dish={dish} />
                     ))}
                 </div>
             </div>

@@ -23,9 +23,9 @@ class TagsBlocks extends Component {
     }
 
     render() {
-        return this.state.tagList?.map((tag)=>(
+        return this.state.tagList?.map((tag, index)=>(
             tag.dishes.length > 1 ?
-                <DishesBlock title={tag.title} dishesList={tag.dishes.slice(0, 3)} href={"/tag/"+tag.id} /> : null
+                <DishesBlock key={index} title={tag.title} dishesList={tag.dishes.slice(0, 3)} href={"/tag/"+tag.id} /> : null
         ))
     }
 }

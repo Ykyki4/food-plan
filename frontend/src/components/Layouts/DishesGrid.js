@@ -45,8 +45,8 @@ class DishesGrid extends Component {
                         </div>   
                         <div className="flex justify-center">
                             <div className="grid grid-cols-3 gap-4">
-                                {currentItems?.map((dish)=>(
-                                    <DishCard dish={dish} />
+                                {currentItems?.map((dish, index)=>(
+                                    <DishCard key={index} dish={dish} />
                                 ))}
                             </div>
                         </div>
